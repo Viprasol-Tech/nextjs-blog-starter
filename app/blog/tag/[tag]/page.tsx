@@ -30,10 +30,10 @@ export default function TagPage({ params }: PageProps) {
       <Link href="/blog" className="text-sm text-brand hover:underline">
         &larr; Back to blog
       </Link>
-      <h1 className="mt-4 text-3xl font-bold text-slate-900">
+      <h1 className="mt-4 text-3xl font-bold text-slate-900 dark:text-slate-100">
         #{params.tag.toLowerCase()}
       </h1>
-      <p className="mt-2 text-slate-600">
+      <p className="mt-2 text-slate-600 dark:text-slate-400">
         {posts.length} {posts.length === 1 ? "post" : "posts"} tagged.
       </p>
 

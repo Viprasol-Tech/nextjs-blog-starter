@@ -1,8 +1,8 @@
 {
   "name": "nextjs-blog-starter",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "Next.js MDX-style blog starter with typed frontmatter and post listing.",
+  "description": "Next.js App Router blog starter: typed posts, categories, tags, authors, client search, pagination, related posts, RSS feed, reading-time/TOC helpers, and dark mode.",
   "license": "MIT",
   "author": "Viprasol Tech Private Limited",
   "homepage": "https://github.com/Viprasol-Tech/nextjs-blog-starter#readme",
