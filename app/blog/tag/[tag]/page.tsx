@@ -5,21 +5,23 @@ import { PostCard } from "@/components/PostCard";
 import { getAllTags, getPostsByTag } from "@/lib/posts";
 
 interface PageProps {
-  params: { tag: string };
+  params: Promise<{ tag: string }>;
 }
 
 export function generateStaticParams(): { tag: string }[] {
   return getAllTags().map((tag) => ({ tag }));
 }
 
-export function generateMetadata({ params }: PageProps): Metadata {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   return {
     title: `#${params.tag}`,
     description: `Posts tagged #${params.tag}.`
   };
 }
 
-export default function TagPage({ params }: PageProps) {
+export default async function TagPage(props: PageProps) {
+  const params = await props.params;
   const posts = getPostsByTag(params.tag);
   if (posts.length === 0) {
     notFound();

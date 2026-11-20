@@ -5,21 +5,23 @@ import { PostCard } from "@/components/PostCard";
 import { getAllCategories, getPostsByCategory } from "@/lib/posts";
 
 interface PageProps {
-  params: { category: string };
+  params: Promise<{ category: string }>;
 }
 
 export function generateStaticParams(): { category: string }[] {
   return getAllCategories().map(({ category }) => ({ category }));
 }
 
-export function generateMetadata({ params }: PageProps): Metadata {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   return {
     title: `Category: ${params.category}`,
     description: `Posts in the ${params.category} category.`
   };
 }
 
-export default function CategoryPage({ params }: PageProps) {
+export default async function CategoryPage(props: PageProps) {
+  const params = await props.params;
   const posts = getPostsByCategory(params.category);
   if (posts.length === 0) {
     notFound();

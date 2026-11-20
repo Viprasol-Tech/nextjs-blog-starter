@@ -9,14 +9,15 @@ import {
 } from "@/lib/posts";
 
 interface PageProps {
-  params: { author: string };
+  params: Promise<{ author: string }>;
 }
 
 export function generateStaticParams(): { author: string }[] {
   return getAllAuthors().map((author) => ({ author: author.slug }));
 }
 
-export function generateMetadata({ params }: PageProps): Metadata {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const author = getAuthorBySlug(params.author);
   if (!author) {
     return { title: "Author not found" };
@@ -27,7 +28,8 @@ export function generateMetadata({ params }: PageProps): Metadata {
   };
 }
 
-export default function AuthorPage({ params }: PageProps) {
+export default async function AuthorPage(props: PageProps) {
+  const params = await props.params;
   const author = getAuthorBySlug(params.author);
   if (!author) {
     notFound();

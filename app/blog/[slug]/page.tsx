@@ -13,14 +13,15 @@ import { formatDate } from "@/lib/format";
 import { extractToc, estimateReadingTime } from "@/lib/toc";
 
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export function generateStaticParams(): { slug: string }[] {
   return getAllPosts().map((post) => ({ slug: post.slug }));
 }
 
-export function generateMetadata({ params }: PageProps): Metadata {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const post = getPostBySlug(params.slug);
   if (!post) {
     return { title: "Post not found" };
@@ -31,7 +32,8 @@ export function generateMetadata({ params }: PageProps): Metadata {
   };
 }
 
-export default function PostPage({ params }: PageProps) {
+export default async function PostPage(props: PageProps) {
+  const params = await props.params;
   const post = getPostBySlug(params.slug);
   if (!post) {
     notFound();

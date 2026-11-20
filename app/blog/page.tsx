@@ -13,10 +13,11 @@ export const metadata: Metadata = {
 const PAGE_SIZE = 4;
 
 interface BlogIndexPageProps {
-  searchParams: { page?: string | string[] };
+  searchParams: Promise<{ page?: string | string[] }>;
 }
 
-export default function BlogIndexPage({ searchParams }: BlogIndexPageProps) {
+export default async function BlogIndexPage(props: BlogIndexPageProps) {
+  const searchParams = await props.searchParams;
   const allPosts = getAllPosts();
   const categories = getAllCategories();
   const requested = parsePageParam(searchParams.page);
